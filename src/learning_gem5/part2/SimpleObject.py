@@ -24,11 +24,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#每个 SimObject 都有一个与之关联的 Python 类。这 Python 类描述了 SimObject 的参数
 from m5.params import *
 from m5.SimObject import SimObject
 
 
-class SimpleObject(SimObject):
+class SimpleObject(SimObject): #不要求 type 与类的名称相同， 但这是惯例
     type = "SimpleObject"
     cxx_header = "learning_gem5/part2/simple_object.hh"
     cxx_class = "gem5::SimpleObject"

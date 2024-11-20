@@ -32,19 +32,14 @@ system.mem_ctrl.port = system.membus.mem_side_ports
 
 system.system_port = system.membus.cpu_side_ports
 
-thispath = os.path.dirname(os.path.realpath(__file__))
+# thispath = os.path.dirname(os.path.realpath(__file__))
+binary = "/home/g/riscv/gem5/tests/test_reg_add.o"
 # binary = os.path.join(
 #     thispath,
 #     "../../../",
-#     "tests/test-progs/hello/bin/riscv/linux/hello",
+#     "tests/test_reg_add",
 # )
-binary = os.path.join(
-    thispath,
-    "../../../",
-    # "tests/mod/mod",
-    "tests/test_reg_add",
-)
-# binary = "/home/g/riscv/gem5/tests/test_reg_add"
+
 system.workload = SEWorkload.init_compatible(binary)
 
 process = Process()

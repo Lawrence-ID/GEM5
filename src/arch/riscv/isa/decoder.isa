@@ -2125,6 +2125,29 @@ decode QUADRANT default Unknown::unknown() {
                 }
             }
         }
+        0x1A: decode FUNCT3 {
+            format ROp {
+                0x0: decode FUNCT7 {
+                    0x01: mod({{
+                        Rd = Rs1_sd + Rs2_sd;
+                    }});
+
+                }
+            }
+        }
+
+        0x1D: decode FUNCT3 {
+            format ROp {
+                 0x0: decode FUNCT7 {
+                    0x01: reg_add({{
+                        int twc = 2 ;
+                        int tws = 3 ;
+                        Rd = ( Rs1_sd * twc ) + ( Rs2_sd * tws ) ;
+                    }});
+                }
+            }
+        }
+
 
         format FPROp {
             0x10: decode FUNCT2 {

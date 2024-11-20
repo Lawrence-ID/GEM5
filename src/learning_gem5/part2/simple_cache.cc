@@ -39,8 +39,8 @@ namespace gem5
 SimpleCache::SimpleCache(const SimpleCacheParams &params) :
     ClockedObject(params),
     latency(params.latency),
-    blockSize(params.system->cacheLineSize()),
-    capacity(params.size / blockSize),
+    blockSize(params.system->cacheLineSize()),//
+    capacity(params.size / blockSize),//
     memPort(params.name + ".mem_side", this),
     blocked(false), originalPacket(nullptr), waitingPortId(-1), stats(this)
 {
@@ -48,7 +48,7 @@ SimpleCache::SimpleCache(const SimpleCacheParams &params) :
     // the CPUSidePort for each connection. This member of params is
     // automatically created depending on the name of the vector port and
     // holds the number of connections to this port name
-    for (int i = 0; i < params.port_cpu_side_connection_count; ++i) {
+    for (int i = 0; i < params.port_cpu_side_connection_count; ++i) {//
         cpuPorts.emplace_back(name() + csprintf(".cpu_side[%d]", i), i, this);
     }
 }

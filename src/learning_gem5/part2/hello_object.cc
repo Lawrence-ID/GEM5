@@ -29,8 +29,8 @@
 #include "learning_gem5/part2/hello_object.hh"
 
 #include "base/logging.hh"
-#include "base/trace.hh"
-#include "debug/HelloExample.hh"
+#include "base/trace.hh"//添加debug调试头后需要添加的
+#include "debug/HelloExample.hh"//添加debug调试头后需要添加的
 
 namespace gem5
 {
@@ -42,12 +42,14 @@ HelloObject::HelloObject(const HelloObjectParams &params) :
     event([this]{ processEvent(); }, name() + ".event"),
     goodbye(params.goodbye_object),
     // Note: This is not needed as you can *always* reference this->name()
-    myName(params.name),
+    myName(params.name),//将参数对象中的名称存储在成员变量myName中，以便稍后使用
     latency(params.time_to_wait),
     timesLeft(params.number_of_fires)
 {
-    DPRINTF(HelloExample, "Created the hello object\n");
-    panic_if(!goodbye, "HelloObject must have a non-null GoodbyeObject");
+    DPRINTF(HelloExample, "Created the hello object\n");//用调试语句替换std::cout调用
+    panic_if(!goodbye, "HelloObject must have a non-null GoodbyeObject");//条件检查
+    //用于条件检查的宏或函数，通常用于在调试或开发过程中捕获错误。它的作用是如果condition为真，
+    //则触发一个错误，通常会中止程序并输出message。
 }
 
 void

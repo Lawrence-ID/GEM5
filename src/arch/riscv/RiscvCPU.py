@@ -33,6 +33,7 @@ from m5.objects.RiscvInterrupts import RiscvInterrupts
 from m5.objects.RiscvISA import RiscvISA
 from m5.objects.RiscvMMU import RiscvMMU
 
+#from m5.params import *
 
 class RiscvCPU:
     ArchDecoder = RiscvDecoder
@@ -51,6 +52,7 @@ class RiscvNonCachingSimpleCPU(BaseNonCachingSimpleCPU, RiscvCPU):
 
 class RiscvTimingSimpleCPU(BaseTimingSimpleCPU, RiscvCPU):
     mmu = RiscvMMU()
+    #custom_reg = Param.CustomReg("Custom register for 32-bit data")
 
 
 class RiscvO3CPU(BaseO3CPU, RiscvCPU):

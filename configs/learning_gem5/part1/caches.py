@@ -1,28 +1,3 @@
-# Copyright (c) 2015 Jason Power
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met: redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer;
-# redistributions in binary form must reproduce the above copyright
-# notice, this list of conditions and the following disclaimer in the
-# documentation and/or other materials provided with the distribution;
-# neither the name of the copyright holders nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """ Caches with options for a simple gem5 configuration script
 
@@ -46,11 +21,13 @@ from common import SimpleOpts
 class L1Cache(Cache):
     """Simple L1 Cache with default values"""
 
-    assoc = 2
-    tag_latency = 2
-    data_latency = 2
-    response_latency = 2
-    mshrs = 4
+    assoc = 2#缓存的相联度。相联度表示每个缓存组中可以存储的缓存行数。在相联缓存中，
+    #较高的相联度通常可以提高缓存命中率，但也可能增加缓存的复杂性和访问时间
+    tag_latency = 2#缓存标签查找的延迟时间（以周期为单位）
+    data_latency = 2#从缓存中读取数据的延迟时间（以周期为单位）
+    response_latency = 2#对请求作出响应的延迟时间（以周期为单位）
+    mshrs = 4#缓存中Miss Status Holding Registers的数量。MSHR用于跟踪缓存未命中的请求及其相关信息
+    #，以便在数据可用时正确处理。
     tgts_per_mshr = 20
 
     def __init__(self, options=None):

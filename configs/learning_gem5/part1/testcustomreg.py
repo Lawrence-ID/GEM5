@@ -6,6 +6,7 @@ X86 ISA). More detailed documentation can be found in `simple.py`.
 
 import m5
 from m5.objects import *
+#from m5.objects import CustomRegisterBank
 import os
 
 system = System()
@@ -32,6 +33,8 @@ system.mem_ctrl.port = system.membus.mem_side_ports
 
 system.system_port = system.membus.cpu_side_ports
 
+#system.custom_reg_bank = CustomRegisterBank()
+
 thispath = os.path.dirname(os.path.realpath(__file__))
 # binary = os.path.join(
 #     thispath,
@@ -42,7 +45,7 @@ binary = os.path.join(
     thispath,
     "../../../",
     # "tests/mod/mod",
-    "tests/test_reg_add",
+    "tests/testcustomreg",
 )
 # binary = "/home/g/riscv/gem5/tests/test_reg_add"
 system.workload = SEWorkload.init_compatible(binary)

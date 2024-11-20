@@ -1126,7 +1126,7 @@ class RegisterBank : public RegisterBankBase
     }
 };
 
-using RegisterBankLE = RegisterBank<ByteOrder::little>;
+using RegisterBankLE = RegisterBank<ByteOrder::little>;//小端字节序 的寄存器类:数据在存储时，低位字节会存放在内存的低地址处。
 using RegisterBankBE = RegisterBank<ByteOrder::big>;
 
 // Delegate serialization to the individual RegisterBase subclasses.
