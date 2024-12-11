@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include "../src/arch/riscv/PioReg.hh"
 
 
 
