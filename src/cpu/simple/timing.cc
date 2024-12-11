@@ -79,7 +79,7 @@ TimingSimpleCPU::TimingCPUPort::TickEvent::schedule(PacketPtr _pkt, Tick t)
 TimingSimpleCPU::TimingSimpleCPU(const BaseTimingSimpleCPUParams &p)
     : BaseSimpleCPU(p), fetchTranslation(this), icachePort(this),
       dcachePort(this), ifetch_pkt(NULL), dcache_pkt(NULL), previousCycle(0),
-      fetchEvent([this]{ fetch(); }, name()),CustomRegBank("CustomRegisterBank", 0x0) // Base address set to 0x1000 报错 改成0x0
+      fetchEvent([this]{ fetch(); }, name()),CustomRegBank("CustomRegisterBank", 0x80000000) // Base address set to 0x1000 报错 改成0x80000000
 {
     _status = Idle;
 

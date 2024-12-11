@@ -6,6 +6,13 @@ if env['CONF']['USE_RISCV_ISA']:
 
 Source('CustomReg.cc', tags='riscv isa')
 
+#SimObject('PioReg.py'，sim_objects=['CustomRegister'],)# 注册 Python SimObject
+Source('PioReg.cc', tags='riscv isa')# 添加源文件
+SimObject('PioReg.py', sim_objects=['PioReg'],tags='riscv isa')
+#sim_objects=[] 表示该模拟对象不需要额外的依赖项?
+#添加调试标志？sim_objects=['PioReg'],
+
+
 Source('decoder.cc', tags='riscv isa')
 Source('faults.cc', tags='riscv isa')
 Source('interrupts.cc', tags='riscv isa')

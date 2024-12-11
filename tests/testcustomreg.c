@@ -30,8 +30,8 @@
 
 int main() {
     // 定义两个变量，用于存储寄存器值
-    uint32_t reg_value_r = 0;
-    uint32_t reg_value_i = 0;
+    uint32_t reg_value_r = 0x80000000;
+    uint32_t reg_value_i = 0x80000004;
 
     // 写入寄存器（ 0x0 和 0x4 是内存映射的地址）
     asm volatile (
