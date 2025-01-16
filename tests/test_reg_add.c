@@ -6,14 +6,14 @@ int main(){
     //测试自定义复数向量指令（vwcmulu.vv）是否可用——测试
     int16_t a[8] = {1,2,3,4,5,6,7,8};
     int16_t b[8] = {8,7,6,5,4,3,2,1,};
-    int16_t result[8] = {0};
+    int32_t result[8] = {0};//测试宽化相关的指令时，应该使用对应的宽化数据类型！！！int32_t 或者int8_t
 
     asm volatile (
         "vsetvli t0, %[vl], e16, m1\n\t"    // 设置向量长度到t0寄存器和元素宽度
         "vle16.v v0, (%[pa])\n\t"               // 加载a数组到v0寄存器
         "vle16.v v1, (%[pb])\n\t"               // 加载b数组到v1寄存器
         "vwcmulu.vv v2, v0, v1\n\t"         // vwcmulu自定义指令，结果存到v2
-        "vse16.v v2, (%[pr])\n\t"               // 将结果从v2寄存器存储到result数组
+        "vse32.v v2, (%[pr])\n\t"               // 将结果从v2寄存器存储到result数组 这里也要同步修改
         :
         : [pa] "r" (a),
           [pb] "r" (b),
@@ -21,6 +21,21 @@ int main(){
           [vl] "r" (8)
         : "t0", "v0", "v1", "v2"
     );
+
+    // // 函数用于打印16位整数的二进制表示
+    // void print_binary(int16_t num){
+    //     for(int i = 15; i >= 0; i--) {
+    //         printf("%d", (num >> i) & 1);
+    //         if(i % 4 == 0 && i != 0) printf(" "); // 每4位添加一个空格，便于阅读
+    //     }
+    // }
+
+    // printf("Result (binary):\n");
+    // for(int i = 0; i < 8; i++) {
+    //     printf("result[%d] = ", i);
+    //     print_binary(result[i]);
+    //     printf("\n");
+    // }//测试bit输出？
 
     printf("Result: ");
     for(int i = 0; i < 8; i++) {

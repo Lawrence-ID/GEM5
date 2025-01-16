@@ -3712,12 +3712,9 @@ decode QUADRANT default Unknown::unknown() {
                                 * vwu(Vs1_vu[i + offset]);
                     }}, OPMVV, SimdMultOp);
                     0x39: vwcmulu_vv({{
-                        if ((i & 1) == 0) {
-                            Vd_vwi[i] = vwi( Vs1_vi[i + offset]   * Vs2_vi[i + offset] ) - vwi( Vs1_vi[i+1 + offset] * Vs2_vi[i+1 + offset] );
-                        }
-                        else {
-                            Vd_vwi[i] = vwi( Vs1_vi[i-1 + offset] * Vs2_vi[i + offset] ) + vwi( Vs1_vi[i + offset]   * Vs2_vi[i-1 + offset] );
-                        }
+                        Vd_vwi[i] =  (i % 2 == 0)
+                        ? vwi(Vs1_vi[i + offset] * Vs2_vi[i + offset]) - vwi(Vs1_vi[i + 1 + offset] * Vs2_vi[i + 1 + offset])
+                        : vwi(Vs1_vi[i - 1 + offset] * Vs2_vi[i + offset]) + vwi(Vs1_vi[i + offset] * Vs2_vi[i - 1 + offset]);
                     }}, OPMVV, SimdMultOp);
                     0x3a: vwmulsu_vv({{
                         Vd_vwi[i] = vwi(Vs2_vi[i + offset])
