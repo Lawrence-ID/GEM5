@@ -7,7 +7,7 @@
 #include "cpu/translation.hh"
 #include "params/BaseTimingSimpleCPU.hh"
 
-#include "arch/riscv/CustomReg.hh"//new add
+// #include "arch/riscv/CustomReg.hh"//new add
 
 namespace gem5
 {
@@ -21,7 +21,7 @@ class TimingSimpleCPU : public BaseSimpleCPU
 
     void init() override;
 
-    CustomRegisterBank CustomRegBank;//new add
+    // CustomRegisterBank CustomRegBank;//new add
 
   private:
 

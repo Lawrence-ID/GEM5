@@ -1,3 +1,48 @@
+// testcustomreg.c
+
+#include <stdio.h>
+#include <stdint.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+
+#define MMIO_BASE 0x20000000
+#define MMIO_SIZE 0x1000
+
+volatile uint32_t *my_register;
+
+int main() {
+    int fd = open("/dev/mem", O_RDWR | O_SYNC);
+    if (fd < 0) {
+        perror("open");
+        return -1;
+    }
+
+    my_register = (volatile uint32_t *)mmap(NULL, MMIO_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, MMIO_BASE);
+    if (my_register == MAP_FAILED) {
+        perror("mmap");
+        close(fd);
+        return -1;
+    }
+
+    // 写入数据到寄存器
+    *my_register = 0xDEADBEEF;
+    printf("Wrote 0x%X to my_register\n", *my_register);
+
+    // 读取数据
+    uint32_t value = *my_register;
+    printf("Read 0x%X from my_register\n", value);
+
+    // 清理
+    munmap((void *)my_register, MMIO_SIZE);
+    close(fd);
+
+    return 0;
+}
+
+
+
+
 // #include <stdio.h>
 // #include <stdint.h>
 
@@ -25,50 +70,50 @@
 
 
 
-#include <stdint.h>
-#include <stdio.h>
+// #include <stdint.h>
+// #include <stdio.h>
 
-int main() {
-    // 定义两个变量，用于存储寄存器值
-    uint32_t reg_value_r = 0x80000000;
-    uint32_t reg_value_i = 0x80000004;
+// int main() {
+//     // 定义两个变量，用于存储寄存器值
+//     uint32_t reg_value_r = 0x20000000;
+//     // uint32_t reg_value_i = 0x80000004;
 
-    // 写入寄存器（ 0x0 和 0x4 是内存映射的地址）
-    asm volatile (
-        "li t0, 0x12345678\n"  // 将数据加载到寄存器 t0
-        "sw t0, 0x0(%0)\n"     // 将 t0 的值存储到地址 0x0
-        :
-        : "r" (0x0)            // 基地址（伪装成操作数传入）
-        : "t0"                 // 告诉编译器 t0 被修改
-    );
+//     // 写入寄存器（ 0x0 和 0x4 是内存映射的地址）
+//     asm volatile (
+//         "li t0, 0x12345678\n"  // 将数据加载到寄存器 t0
+//         "sw t0, 0x20000000(%0)\n"     // 将 t0 的值存储到地址 0x0
+//         :
+//         : "r" (0x0)            // 基地址（伪装成操作数传入）
+//         : "t0"                 // 告诉编译器 t0 被修改
+//     );
 
-    asm volatile (
-        "li t1, 0x87654321\n"  // 将数据加载到寄存器 t1
-        "sw t1, 0x4(%0)\n"     // 将 t1 的值存储到地址 0x4
-        :
-        : "r" (0x0)            // 基地址（伪装成操作数传入）
-        : "t1"                 // 告诉编译器 t1 被修改
-    );
+//     // asm volatile (
+//     //     "li t1, 0x87654321\n"  // 将数据加载到寄存器 t1
+//     //     "sw t1, 0x4(%0)\n"     // 将 t1 的值存储到地址 0x4
+//     //     :
+//     //     : "r" (0x0)            // 基地址（伪装成操作数传入）
+//     //     : "t1"                 // 告诉编译器 t1 被修改
+//     // );
 
-    // 读取寄存器值
-    asm volatile (
-        "lw %0, 0x0(%1)\n"     // 从地址 0x0 读取到变量 reg_value_0
-        : "=r" (reg_value_r)
-        : "r" (0x0)
-    );
+//     // 读取寄存器值
+//     asm volatile (
+//         "lw %0, 0x20000000(%1)\n"     // 从地址 0x0 读取到变量 reg_value_0
+//         : "=r" (reg_value_r)
+//         : "r" (0x0)
+//     );
 
-    asm volatile (
-        "lw %0, 0x4(%1)\n"     // 从地址 0x8 读取到变量 reg_value_8
-        : "=r" (reg_value_i)
-        : "r" (0x0)
-    );
+//     // asm volatile (
+//     //     "lw %0, 0x4(%1)\n"     // 从地址 0x8 读取到变量 reg_value_8
+//     //     : "=r" (reg_value_i)
+//     //     : "r" (0x0)
+//     // );
 
-    // 打印寄存器值
-    printf("Value at 0x0: 0x%08x\n", reg_value_r);
-    printf("Value at 0x4: 0x%08x\n", reg_value_i);
+//     // 打印寄存器值
+//     printf("Value at 0x20000000: 0x%08x\n", reg_value_r);
+//     // printf("Value at 0x4: 0x%08x\n", reg_value_i);
 
-    return 0;
-}
+//     return 0;
+// }
 
 // #include <stdio.h>
 

@@ -71,6 +71,7 @@ enum : RegIndex
     _S4Idx,   _S5Idx, _S6Idx,  _S7Idx,
     _S8Idx,   _S9Idx, _S10Idx, _S11Idx,
     _T3Idx,   _T4Idx, _T5Idx,  _T6Idx,
+    _CUSIdx, //new add
 
     NumArchRegs,
 
@@ -120,7 +121,8 @@ inline constexpr RegId
     T4 = intRegClass[_T4Idx],
     T5 = intRegClass[_T5Idx],
     T6 = intRegClass[_T6Idx],
-    Ureg0 = intRegClass[_Ureg0Idx];
+    Ureg0 = intRegClass[_Ureg0Idx],
+    CUS = intRegClass[_CUSIdx];
 
 const std::vector<std::string> RegNames = {
     "zero", "ra", "sp", "gp",
@@ -130,7 +132,8 @@ const std::vector<std::string> RegNames = {
     "a6", "a7", "s2", "s3",
     "s4", "s5", "s6", "s7",
     "s8", "s9", "s10", "s11",
-    "t3", "t4", "t5", "t6"
+    "t3", "t4", "t5", "t6",
+    "cus"
 };
 
 } // namespace int_reg

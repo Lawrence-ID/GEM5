@@ -23,7 +23,7 @@ class PioReg : public BasicPioDevice{
     //typedef PioRegParams Params; //将PioRegParams类型定义为Params，简化后续代码的书写，使得后面可以通过Params来引用PioRegParams。
     //using Params = PioRegParams;  // 确保 Params 类型定义正确
     PioReg(const PioRegParams &p); // 构造函数，参数是一个指向 Params 类型的指针，通常包含了由 Python 配置文件传入的参数，例如寄存器的地址、大小等。
-
+    virtual ~PioReg() {}
 
     // 必须实现的虚函数，包括重写读写方法
     AddrRangeList getAddrRanges() const override;

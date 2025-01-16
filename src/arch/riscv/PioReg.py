@@ -8,7 +8,6 @@ from m5.proxy import *
 #from m5.objects import BasicPioDevice
 # from m5.objects.BasicPioDevice import BasicPioDevice
 from m5.objects.Device import BasicPioDevice
-from m5.SimObject import SimObject
 
 class PioReg(BasicPioDevice):
     type = 'PioReg'

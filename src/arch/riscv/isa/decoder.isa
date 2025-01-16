@@ -2129,9 +2129,8 @@ decode QUADRANT default Unknown::unknown() {
             format ROp {
                 0x0: decode FUNCT7 {
                     0x01: mod({{
-                        Rd = Rs1_sd + Rs2_sd;
+                        Rd = Rs1_sd % Rs2_sd;
                     }});
-
                 }
             }
         }
@@ -2832,6 +2831,9 @@ decode QUADRANT default Unknown::unknown() {
                     }}, OPIVV, SimdAluOp);
                     0xb: vxor_vv({{
                         Vd_vu[i] = Vs2_vu[i] ^ Vs1_vu[i];
+                    }}, OPIVV, SimdAluOp);
+                    0xf: vmod_vv({{
+                        Vd_vu[i] = Vs2_vu[i] % Vs1_vu[i];
                     }}, OPIVV, SimdAluOp);
                 }
                 0x0c: VectorGatherFormat::vrgather_vv({{
@@ -3708,6 +3710,14 @@ decode QUADRANT default Unknown::unknown() {
                     0x38: vwmulu_vv({{
                         Vd_vwu[i] = vwu(Vs2_vu[i + offset])
                                 * vwu(Vs1_vu[i + offset]);
+                    }}, OPMVV, SimdMultOp);
+                    0x39: vwcmulu_vv({{
+                         if ((i & 1) == 0) {
+                            Vd_vwi[i] = vwi( Vs1_vi[i + offset]   * Vs2_vi[i + offset] ) - vwi( Vs1_vi[i+1 + offset] * Vs2_vi[i+1 + offset] );
+                        }
+                        else {
+                            Vd_vwi[i] = vwi( Vs1_vi[i-1 + offset] * Vs2_vi[i + offset] ) + vwi( Vs1_vi[i + offset]   * Vs2_vi[i-1 + offset] );
+                        }
                     }}, OPMVV, SimdMultOp);
                     0x3a: vwmulsu_vv({{
                         Vd_vwi[i] = vwi(Vs2_vi[i + offset])

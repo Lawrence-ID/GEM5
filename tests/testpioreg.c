@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "../src/arch/riscv/PioReg.hh"
-
-
 
 
 //#define FIRST_PIO_REG_ADDR 0x20000000
