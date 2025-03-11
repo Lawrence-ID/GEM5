@@ -40,9 +40,6 @@
  */
 
 #include "cpu/simple/timing.hh"
-// #include "arch/riscv/CustomReg.hh"//new add
-#include "cpu/exec_context.hh"
-#include "debug/Exec.hh"
 
 #include "arch/generic/decoder.hh"
 #include "base/compiler.hh"
@@ -79,25 +76,9 @@ TimingSimpleCPU::TimingCPUPort::TickEvent::schedule(PacketPtr _pkt, Tick t)
 TimingSimpleCPU::TimingSimpleCPU(const BaseTimingSimpleCPUParams &p)
     : BaseSimpleCPU(p), fetchTranslation(this), icachePort(this),
       dcachePort(this), ifetch_pkt(NULL), dcache_pkt(NULL), previousCycle(0),
-      fetchEvent([this]{ fetch(); }, name()) //,CustomRegBank("CustomRegisterBank", 0x80000000) // Base address set to 0x1000 报错 改成0x80000000
+      fetchEvent([this]{ fetch(); }, name())
 {
     _status = Idle;
-
-    // // 初始化自定义寄存器的值
-    // uint64_t initialReal = 42; // 初始值
-    // uint64_t initialImag = 84;
-
-    // CustomRegBank.realPartReg.write(&initialReal);
-    // CustomRegBank.imagPartReg.write(&initialImag);
-
-    // // 输出调试信息
-    // uint64_t debugReal, debugImag;
-    // CustomRegBank.realPartReg.read(&debugReal);
-    // CustomRegBank.imagPartReg.read(&debugImag);
-
-    // std::cout << "Custom Register Initialization Code Executed" << std::endl;//调试用
-    // DPRINTF(Exec, "Custom Register Initialization: RealPart = %lu, ImagPart = %lu\n", debugReal, debugImag);//调试信息 第一个数据是debugflag
-
 }
 
 

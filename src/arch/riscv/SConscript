@@ -4,15 +4,6 @@ Import('*')
 if env['CONF']['USE_RISCV_ISA']:
     env.TagImplies('riscv isa', 'gem5 lib')
 
-# Source('CustomReg.cc', tags='riscv isa')
-
-# #SimObject('PioReg.py'，sim_objects=['CustomRegister'],)# 注册 Python SimObject
-# Source('PioReg.cc', tags='riscv isa')# 添加源文件
-# SimObject('PioReg.py', sim_objects=['PioReg'],tags='riscv isa')
-# #sim_objects=[] 表示该模拟对象不需要额外的依赖项?
-# #添加调试标志？sim_objects=['PioReg'],
-
-
 Source('decoder.cc', tags='riscv isa')
 Source('faults.cc', tags='riscv isa')
 Source('interrupts.cc', tags='riscv isa')
@@ -31,10 +22,6 @@ Source('linux/se_workload.cc', tags='riscv isa')
 Source('linux/fs_workload.cc', tags='riscv isa')
 
 Source('bare_metal/fs_workload.cc', tags='riscv isa')
-
-# SimObject('CustomReg.py', sim_objects=['CustomRegisterBank'],
-#     tags='riscv isa')#new add
-
 
 SimObject('PMAChecker.py', sim_objects=['PMAChecker', 'BasePMAChecker'],
     tags='riscv isa')

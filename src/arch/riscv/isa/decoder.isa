@@ -3367,6 +3367,18 @@ decode QUADRANT default Unknown::unknown() {
                             fwiden(ftype<et>(Vs1_vu[i + offset])));
                         Vd_vwu[i] = fd.v;
                     }}, OPFVV, SimdFloatAddOp);
+                    0x35: vfwcmul_vv({{
+                        auto fd = (i % 2 == 0)
+                        ? fsub<et>(
+                            fmul<et>(ftype<et>(Vs1_vu[i + offset]), ftype<et>(Vs2_vu[i + offset])) ,
+                            fmul<et>(ftype<et>(Vs1_vu[i +1 + offset]), ftype<et>(Vs2_vu[i +1 + offset]))
+                        )
+                        : fadd<et>(
+                            fmul<et>(ftype<et>(Vs1_vu[i -1 + offset]), ftype<et>(Vs2_vu[i + offset])) ,
+                            fmul<et>(ftype<et>(Vs1_vu[i + offset]), ftype<et>(Vs2_vu[i -1 + offset]))
+                        );
+                        Vd_vu[i] = fd.v;
+                    }}, OPFVV, SimdFloatMultOp);
                     0x36: vfwsub_wv({{
                         auto fd = fsub<ewt>(
                             ftype<ewt>(Vs2_vwu[i]),
@@ -3711,7 +3723,7 @@ decode QUADRANT default Unknown::unknown() {
                         Vd_vwu[i] = vwu(Vs2_vu[i + offset])
                                 * vwu(Vs1_vu[i + offset]);
                     }}, OPMVV, SimdMultOp);
-                    0x39: vwcmulu_vv({{
+                    0x39: vwcmul_vv({{
                         Vd_vwi[i] =  (i % 2 == 0)
                         ? vwi(Vs1_vi[i + offset] * Vs2_vi[i + offset]) - vwi(Vs1_vi[i + 1 + offset] * Vs2_vi[i + 1 + offset])
                         : vwi(Vs1_vi[i - 1 + offset] * Vs2_vi[i + offset]) + vwi(Vs1_vi[i + offset] * Vs2_vi[i - 1 + offset]);
@@ -3734,6 +3746,11 @@ decode QUADRANT default Unknown::unknown() {
                                 * vwi(Vs2_vi[i + offset])
                                 + Vs3_vwi[i];
                     }}, OPMVV, SimdMultAccOp);
+                    0x3e: vwcmulcj_vv({{
+                        Vd_vwi[i] =  (i % 2 == 0)
+                        ? vwi(Vs1_vi[i + offset] * Vs2_vi[i + offset]) + vwi(Vs1_vi[i + 1 + offset] * Vs2_vi[i + 1 + offset])
+                        : - vwi(Vs1_vi[i - 1 + offset] * Vs2_vi[i + offset]) + vwi(Vs1_vi[i + offset] * Vs2_vi[i - 1 + offset]);
+                    }}, OPMVV, SimdMultOp);
                     0x3f: vwmaccsu_vv({{
                         Vd_vwi[i] = vwi(Vs1_vi[i + offset])
                                 * vwu(Vs2_vu[i + offset])
